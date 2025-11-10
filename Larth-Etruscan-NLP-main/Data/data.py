@@ -1,3 +1,4 @@
+from pathlib import Path
 """
 Methods and classes for working on the datasets.
 
@@ -15,7 +16,7 @@ try:
 except ModuleNotFoundError:
     import utils
 
-_dir = __file__.rsplit("/", 1)[0] + "/"
+_dir = Path(__file__).resolve().parent.as_posix() + "/"
 
 name_columns: List[str] = [
     "city name",

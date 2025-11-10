@@ -12,7 +12,7 @@ Artefacts are written under the `artifacts/` directory.
 from __future__ import annotations
 
 import argparse
-import importlib
+from importlib import util
 import json
 import subprocess
 import sys
@@ -47,7 +47,7 @@ def ensure_dependencies() -> None:
     ]
     missing: List[str] = []
     for pkg in required:
-        if importlib.util.find_spec(pkg) is None:
+        if util.find_spec(pkg) is None:
             missing.append(pkg)
     if missing:
         raise SystemExit(

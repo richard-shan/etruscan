@@ -1,10 +1,17 @@
+from pathlib import Path
 """
 Module with tokenizers.
 """
 from abc import ABC, abstractmethod
 from typing import Callable, Iterable, List, Dict, Tuple, Self
-from nltk.tokenize import WhitespaceTokenizer
 import re
+
+try:
+    from nltk.tokenize import WhitespaceTokenizer  # type: ignore
+except Exception:  # pragma: no cover
+    class WhitespaceTokenizer:  # type: ignore
+        def tokenize(self, text: str) -> list[str]:
+            return text.split()
 
 try:
     from .data import load_suffixes
@@ -20,7 +27,7 @@ import sentencepiece as spm
 ETRUSCAN = list(" abcdefghijklmnopqrstuvwxyz-")  # - is the unk char
 ENGLISH = list(" abcdefghijklmnopqrstuvwxyz")
 
-_dir = __file__.rsplit("/", 1)[0] + "/"
+_dir = Path(__file__).resolve().parent.as_posix() + "/"
 
 
 class BaseTokenizer(ABC):
